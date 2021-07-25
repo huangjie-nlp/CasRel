@@ -1,5 +1,5 @@
 # casrel-torch
-快速实现中文实体关系抽取
+快速实现CasRel模型中文实体关系抽取,2020ACL论文：A Novel Cascade Binary Tagging Framework for Relational Triple Extraction
 
 
 实验环境安装 pip install -r requirements
