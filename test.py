@@ -24,7 +24,7 @@ model.load_state_dict(torch.load(con.save_model_name))
 def test(model,sentence,con):
     model.eval()
     id2rel = json.load(open(con.schemas,"r",encoding="utf-8"))[1]
-    token = ["CLS"] + tokenizer.tokenize(sentence) + ["SEP"]
+    token = ["[CLS]"] + tokenizer.tokenize(sentence) + ["[SEP]"]
     token_ids = tokenizer.convert_tokens_to_ids(token)
     mask = [1] * len(token_ids)
     if len(token_ids) > 512:
