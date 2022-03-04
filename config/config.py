@@ -26,3 +26,4 @@ class Config():
         self.t_bar = 0.5
         self.save_model_name = "checkpoint/" + self.dataset + "_casrel_model"
         self.test_fn_result = "test_result/" + self.dataset+"_casrel_test.json"
+        self.log = "log/"+self.dataset+"_log.log"

@@ -16,13 +16,15 @@ import torch
 import torch.nn.functional as F
 from dataloader.dataloader import MyDataset,collate_fn
 from torch.utils.data import DataLoader
-
+from Logger.logger import Logger
 
 class Framework():
     def __init__(self,con):
         self.con = con
         self.id2rel = json.load(open(self.con.schemas,"r",encoding="utf-8"))[1]
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.logger = Logger(self.con.log)
+
     def train(self,model,train_fn,dev_fn):
 
         def loss_fn(pred,target,mask):
@@ -73,7 +75,8 @@ class Framework():
                 epoch_loss += loss.item()
                 global_step_loss += loss.item()
                 if (global_step+1) % 100 == 0:
-                    print("epoch:{},global_step:{},global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
+                    # print("epoch:{},global_step:{},global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
+                    self.logger.logger.info("epoch:{},global_step:{},global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
                     global_step_loss = 0
                 global_step += 1
             if (epoch+1) % 5 == 0:
@@ -83,12 +86,16 @@ class Framework():
                     best_epoch = epoch
                     best_recall = recall
                     best_precision = precision
-                    print("precision:{:5.4f},recall:{:5.4f},f1_score:{:5.4f},best_f1_score:{:5.4f},best_epoch:{:3d}".
+                    # print("precision:{:5.4f},recall:{:5.4f},f1_score:{:5.4f},best_f1_score:{:5.4f},best_epoch:{:3d}".
+                    #       format(precision,recall,f1_score,best_F1,best_epoch))
+                    self.logger.logger.info("precision:{:5.4f},recall:{:5.4f},f1_score:{:5.4f},best_f1_score:{:5.4f},best_epoch:{:3d}".
                           format(precision,recall,f1_score,best_F1,best_epoch))
                     print("save model...")
                     torch.save(model.state_dict(),self.con.save_model_name)
             print("epoch:{:3d}, epoch_loss:{:5.4f}, cost:{:5.2f} min".format(epoch,epoch_loss,(time.time()-init_time)/60))
         print("best_epoch:{:3d},best_precision:{:5.4f},best_recall:{:5.4f},best_f1_score:{:5.4f}".
+              format(best_epoch,best_precision,best_recall,best_F1))
+        self.logger.logger.info("best_epoch:{:3d},best_precision:{:5.4f},best_recall:{:5.4f},best_f1_score:{:5.4f}".
               format(best_epoch,best_precision,best_recall,best_F1))
     def evaluate(self,model,dataloader,save_fn):
         init_time = time.time()
