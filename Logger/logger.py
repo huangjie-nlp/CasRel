@@ -15,7 +15,7 @@ class Logger():
         sh = logging.StreamHandler()
         sh.setFormatter(format_str)
 
-        th = handlers.TimedRotatingFileHandler(filename,when=when,encoding="utf-8",backupCount=backcount)
+        th = handlers.TimedRotatingFileHandler(filename=filename,when=when,encoding="utf-8",backupCount=backcount)
         th.setFormatter(format_str)
 
         self.logger.addHandler(sh)

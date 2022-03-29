@@ -76,7 +76,7 @@ class Framework():
                 global_step_loss += loss.item()
                 if (global_step+1) % 100 == 0:
                     # print("epoch:{},global_step:{},global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
-                    self.logger.logger.info("epoch:{},global_step:{},global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
+                    self.logger.logger.info("epoch:{}, global_step:{}, global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
                     global_step_loss = 0
                 global_step += 1
             if (epoch+1) % 5 == 0:
@@ -88,15 +88,16 @@ class Framework():
                     best_precision = precision
                     # print("precision:{:5.4f},recall:{:5.4f},f1_score:{:5.4f},best_f1_score:{:5.4f},best_epoch:{:3d}".
                     #       format(precision,recall,f1_score,best_F1,best_epoch))
-                    self.logger.logger.info("precision:{:5.4f},recall:{:5.4f},f1_score:{:5.4f},best_f1_score:{:5.4f},best_epoch:{:3d}".
+                    self.logger.logger.info("precision:{:5.4f}, recall:{:5.4f}, f1_score:{:5.4f}, best_f1_score:{:5.4f}, best_epoch:{:3d}".
                           format(precision,recall,f1_score,best_F1,best_epoch))
                     print("save model...")
                     torch.save(model.state_dict(),self.con.save_model_name)
             print("epoch:{:3d}, epoch_loss:{:5.4f}, cost:{:5.2f} min".format(epoch,epoch_loss,(time.time()-init_time)/60))
         print("best_epoch:{:3d},best_precision:{:5.4f},best_recall:{:5.4f},best_f1_score:{:5.4f}".
               format(best_epoch,best_precision,best_recall,best_F1))
-        self.logger.logger.info("best_epoch:{:3d},best_precision:{:5.4f},best_recall:{:5.4f},best_f1_score:{:5.4f}".
+        self.logger.logger.info("best_epoch:{:3d}, best_precision:{:5.4f}, best_recall:{:5.4f}, best_f1_score:{:5.4f}".
               format(best_epoch,best_precision,best_recall,best_F1))
+
     def evaluate(self,model,dataloader,save_fn):
         init_time = time.time()
         model.eval()
@@ -165,7 +166,7 @@ class Framework():
         recall = correct_num / (gold_num + 1e-10)
         f1_score = 2 * precision * recall / (precision + recall + 1e-10)
         print("evauate model cost {}s".format(time.time()-init_time))
-        print("predict_num:{},correct:{},gold_num{}".format(predict_num,correct_num,gold_num))
+        print("predict_num:{},correct:{},gold_num:{}".format(predict_num,correct_num,gold_num))
         model.train()
         return precision,recall,f1_score
 
