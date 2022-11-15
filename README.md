@@ -1,4 +1,4 @@
-# casrel-torch
+# CasRel
 
 快速实现中文实体关系抽取
 
