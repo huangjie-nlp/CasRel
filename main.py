@@ -31,6 +31,6 @@ dev_fn = "dataset/"+con.dataset+"/val_data.json"
 
 model = Casrel(con)
 framework = Framework(con)
-framework.train(model,train_fn,dev_fn)
+framework.train(model, train_fn, dev_fn)
 print("start test......")
-framework.test(model,dev_fn)
+framework.test(model, dev_fn)

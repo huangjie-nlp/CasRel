@@ -14,7 +14,7 @@ class Config():
     def __init__(self):
         self.dataset = "chip"
         self.bert_dim = 768
-        self.bert_model_path = "pretrain/cased_L-12_H-768_A-12"
+        self.bert_model_path = "bert-base-chinese"
         self.num_rel = 53
         self.schemas = "dataset/"+self.dataset+"/schemas.json"
         self.max_len = 256
@@ -24,6 +24,6 @@ class Config():
         self.eval_fn_name = "eval_result/" + self.dataset+"_casrel_eval.json"
         self.h_bar = 0.5
         self.t_bar = 0.5
-        self.save_model_name = "checkpoint/" + self.dataset + "_casrel_model"
+        self.save_model_name = "checkpoint/" + self.dataset + "_casrel_model.pt"
         self.test_fn_result = "test_result/" + self.dataset+"_casrel_test.json"
         self.log = "log/"+self.dataset+"_log.log"

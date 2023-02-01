@@ -33,6 +33,7 @@ class MyDataset(Dataset):
         self.rel2id = json.load(open(self.con.schemas,"r",encoding="utf-8"))[0]
         self.tokenizer = BertTokenizer.from_pretrained(self.con.bert_model_path)
         self.bert_len = 512
+
     def __len__(self):
         return len(self.data)
 
@@ -40,7 +41,7 @@ class MyDataset(Dataset):
         ins_json = self.data[idx]
         text = ins_json["text"]
         text = "".join(list(text.replace(" ",""))[:self.con.max_len])
-        token = ["[CLS]"] + self.tokenizer.tokenize(text) + ["[SEP]"]
+        token = ["[CLS]"] + list(text) + ["[SEP]"]
         if len(token) > self.bert_len:
             token = token[:self.bert_len]
         token_len = len(token)

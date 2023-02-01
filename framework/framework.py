@@ -16,7 +16,7 @@ import torch
 import torch.nn.functional as F
 from dataloader.dataloader import MyDataset,collate_fn
 from torch.utils.data import DataLoader
-from Logger.logger import Logger
+from logger.logger import Logger
 
 class Framework():
     def __init__(self,con):
@@ -74,7 +74,7 @@ class Framework():
                 optimizer.step()
                 epoch_loss += loss.item()
                 global_step_loss += loss.item()
-                if (global_step+1) % 100 == 0:
+                if (global_step+1) % 200 == 0:
                     # print("epoch:{},global_step:{},global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
                     self.logger.logger.info("epoch:{}, global_step:{}, global_step_loss:{:5.4f}".format(epoch,global_step,global_step_loss))
                     global_step_loss = 0
@@ -122,7 +122,7 @@ class Framework():
                                                         np.where(pred_sub_tails.cpu()[0] > self.con.t_bar)[0]
                 subjects = []
                 for sub_head in pred_sub_heads_idx:
-                    sub_tails = pred_sub_tails_idx[pred_sub_tails_idx > sub_head]
+                    sub_tails = pred_sub_tails_idx[pred_sub_tails_idx >= sub_head]
                     if len(sub_tails):
                         sub_tail = sub_tails[0]
                         subjects.append(("".join(token[sub_head:sub_tail+1]),sub_head,sub_tail))
@@ -171,11 +171,11 @@ class Framework():
         return precision,recall,f1_score
 
     def test(self,model,test_fn):
-        dataset = MyDataset(self.con,test_fn,is_test=True)
-        dataloader = DataLoader(dataset,shuffle=True,batch_size=1,collate_fn=collate_fn,pin_memory=True)
+        dataset = MyDataset(self.con, test_fn, is_test=True)
+        dataloader = DataLoader(dataset, shuffle=True, batch_size=1, collate_fn=collate_fn, pin_memory=True)
         print("load model......")
         model.load_state_dict(torch.load(self.con.save_model_name))
         model.to(self.device)
-        precision, recall, f1_score = self.evaluate(model,dataloader,self.con.test_fn_result)
+        precision, recall, f1_score = self.evaluate(model, dataloader, self.con.test_fn_result)
         print("test result!!!")
         print("precision:{:5.4f}, recall:{:5.4f}, f1_score:{:5.4f}".format(precision, recall, f1_score))
