@@ -1,29 +1,21 @@
-# -*- coding: utf-8 -*-
-"""
--------------------------------------------------
-# @Project  :CasRel
-# @File     :config
-# @Date     :2021/7/24 14:22
-# @Author   :huangjie
-# @Email    :728155808@qq.com
-# @Software :PyCharm
--------------------------------------------------
-"""
 
 class Config():
     def __init__(self):
         self.dataset = "chip"
-        self.bert_dim = 768
-        self.bert_model_path = "bert-base-chinese"
-        self.num_rel = 53
-        self.schemas = "dataset/"+self.dataset+"/schemas.json"
-        self.max_len = 256
+        self.rel_num = 53
+        self.bert_path = "./bert-base-chinese"
+        self.train_data = "./dataset/" + self.dataset + "/train_data.json"
+        self.dev_data = "./dataset/" + self.dataset + "/dev_data.json"
+        self.test_data = "./dataset/" + self.dataset + "/dev_data.json"
+        self.schema = "./dataset/" + self.dataset + "/schemas.json"
+        self.log = "log/{}_log.log".format(self.dataset)
+        self.learning_rate = 1e-5
         self.batch_size = 16
-        self.lr = 1e-5
         self.epoch = 300
-        self.eval_fn_name = "eval_result/" + self.dataset+"_casrel_eval.json"
+        self.step = 1000
+        self.val_epoch = 5
         self.h_bar = 0.5
         self.t_bar = 0.5
-        self.save_model_name = "checkpoint/" + self.dataset + "_casrel_model.pt"
-        self.test_fn_result = "test_result/" + self.dataset+"_casrel_test.json"
-        self.log = "log/"+self.dataset+"_log.log"
+        self.save_model = "checkpoint/{}_model.pt".format(self.dataset)
+        self.dev_result = "dev_result/{}_dev.json".format(self.dataset)
+        self.test_result = "test_result/{}_test.json".format(self.dataset)
