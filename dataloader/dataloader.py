@@ -117,6 +117,7 @@ def collate_fn(batch):
     batch_subject_tail = torch.Tensor(cur_batch, max_token_length).zero_()
     batch_subject_heads = torch.Tensor(cur_batch, max_token_length).zero_()
     batch_subject_tails = torch.Tensor(cur_batch, max_token_length).zero_()
+    # 53是指关系的数量，即和config.py中的 rel_num
     batch_object_heads = torch.Tensor(cur_batch, max_token_length, 53).zero_()
     batch_object_tails = torch.Tensor(cur_batch, max_token_length, 53).zero_()
 
