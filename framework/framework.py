@@ -5,7 +5,7 @@ from models.models import Casrel
 from dataloader.dataloader import MyDataset, collate_fn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-from Logger.logger import Logger
+from logger.logger import Logger
 import numpy as np
 
 class Framework():
