@@ -15,6 +15,6 @@ torch.backends.cudnn.benchmark = False
 
 config = Config()
 fw = Framework(config)
-# fw.train()
+fw.train()
 print("===================================test=============================")
 fw.test(config.test_data)
